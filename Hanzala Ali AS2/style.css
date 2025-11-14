@@ -1,0 +1,391 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    color: white;
+    font-family: 'Press Start 2P';
+}
+
+body {
+    background-color: black;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 80vh 1fr;
+    grid-template-rows: auto;
+    grid-template-areas: 
+        "header header header"
+        "lboard main score"
+        "lboard main controls";
+    align-items: center;
+    justify-items: center;
+}
+
+header {
+    grid-area: header;
+    text-align: center;
+}
+
+.startDiv {
+    position: absolute;
+    display: flex;
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+}
+
+.startDiv div {
+	background-color: #ccc;
+    z-index: 100;
+	cursor: pointer;
+	border-radius: 20px;
+	box-shadow: 4px 4px 4px #000;
+    padding: 20px 30px;
+    display: flex;
+    height: 32px;
+}
+
+.startDiv h1 {
+    text-shadow: 2px 2px 2px #000;
+	font-size: 2em;
+    text-decoration: none;
+    margin-left: 10px;
+}
+
+header h1 {
+    font-size: 4em;
+}
+
+main {
+    grid-area: main;
+    display: grid;
+    grid-template-columns: repeat(10, 10%);
+    width: 80vh;
+    height: 80vh;
+    align-items: center;
+    justify-items: center;
+    position: relative;
+    width: 640px;   
+    height: 640px; 
+    margin: 0 auto;
+}
+
+main::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.lives {
+    position: absolute;
+      top: 0;
+    right: 0;
+     height: auto;
+     display: flex;
+     align-items: center;
+     margin: 0.5em;
+}
+
+.lives li {
+    list-style: none;
+    background-color: yellow;
+    width: 2em;
+    height: 2em;
+    border-radius: 100%;
+    margin: 5px;
+}
+
+.lives ul {
+    display: flex;
+}
+
+.score {
+    grid-area: score;
+}
+
+.leaderboard {
+    grid-area: lboard;
+}
+
+.leaderboard ol {
+    padding-left: 1.5em;
+    width: 100%;
+    max-width: 350px;
+    margin-top: 1em;
+    text-align: left;
+}
+
+.leaderboard ol li {
+    font-size: 1em;
+    padding: 0.5em 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 320px;
+    display: block;
+}
+
+div {
+    height: 100%;
+    text-align: center;
+}
+
+div h1 {
+    font-size: 1.25em;
+    text-decoration: underline;
+}
+
+div p {
+    margin: 0.5em;
+    font-size: 2em;
+}
+
+#player {
+    background-color: yellow;
+    border-radius: 100%;
+    position: relative;
+    width: 85%;
+    height: 85%;
+}
+
+.enemy {
+    background-color: green;
+    border-radius: 100%;
+    height: 90%;
+    width: 90%;
+    position: relative;
+}
+
+.point {
+    border-radius: 100%;
+    background-color: white;
+}
+
+.wall {
+    background-color: blue;
+    width: 100%;
+    height: 100%;
+}
+
+.up, .down, .left, .right {
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    animation: mouth 1.25s infinite steps(1, end);
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.up { clip-path: polygon(0 0, 100% 0, 50% 50%); }
+.down { clip-path: polygon(0 100%, 100% 100%, 50% 50%); }
+.left { clip-path: polygon(0 0, 0 100%, 50% 50%); }
+.right { clip-path: polygon(100% 0, 100% 100%, 50% 50%); }
+
+@keyframes mouth {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+.controls {
+     grid-area: controls;
+     display: grid;
+      grid-template-columns: repeat(3, 1fr);
+     grid-template-rows: repeat(3, 1fr);
+     grid-template-areas: 
+        ". upArrow ."
+        "leftArrow . rightArrow"
+        ". downArrow .";
+      width: 25vh;
+      height: 25vh;
+}
+
+button {
+       background-color: rgb(10, 10, 10);
+}
+
+button:nth-child(1) { grid-area: leftArrow; }
+button:nth-child(2) { grid-area: upArrow; }
+button:nth-child(3) { grid-area: rightArrow; }
+button:nth-child(4) { grid-area: downArrow; }
+
+@keyframes deathAnimation {
+    0% {
+            transform: scale(1);
+    }
+
+    50% {
+             transform: scale(0.5);
+    }
+
+    100% {
+            transform: scale(0);
+    }
+}
+
+@keyframes hitAnimation {
+
+    0%, 100% {
+           background-color: yellow;
+           transform: scale(1);
+    }
+
+    50% {
+           background-color: red;
+           transform: scale(0.75);
+    }
+    
+}
+
+.dead {
+    animation: deathAnimation 1.5s ease-in-out forwards;
+}
+
+.hit {
+    animation: hitAnimation 1.5s ease-in-out;
+}
+
+.block {
+    width: 64px;
+    height: 64px;
+    float: left;
+    box-sizing: border-box;
+}
+
+.game-over {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.85);
+    color: yellow;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 2em;
+    z-index: 9999;
+    text-align: center;
+}
+.game-over.show {
+    display: flex;
+}
+.game-over h1 {
+    margin-bottom: 0.5em;
+    font-size: 2.5em;
+}
+.game-over p {
+    font-size: 1.2em;
+}
+
+#playAgainBtn {
+    font-size: 2em;
+    padding: 0.5em 2em;
+    border-radius: 15px;
+    border: none;
+    background: yellow;
+    color: black;
+    cursor: pointer;
+    margin-top: 1em;
+    transition: background 0.2s, color 0.2s, transform 0.1s;
+}
+
+#playAgainBtn:hover {
+    background: orange;
+    color: #222;
+    box-shadow: 0 0 15px yellow;
+    transform: scale(1.08);
+}
+
+#playAgainBtn:active {
+    background: #ffd700;
+    color: #111;
+    transform: scale(0.98);
+}
+
+.popup-bg {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10001;
+    padding: 0;
+    height: 100%; 
+}
+
+.popup-content {
+    background: #222;
+    padding: 1.2em 2em;
+    border-radius: 18px;
+    box-shadow: 0 0 30px #000;
+    text-align: center;
+    min-width: 320px;
+    min-height: 220px;  
+    max-width: 90vw;
+    max-height: 80vh;
+    overflow: auto;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; 
+}
+.popup-content h2 {
+    margin-bottom: 1em;
+    color: yellow;
+    font-size: 1.5em;
+}
+
+#playerNameInput {
+ font-size: 1.2em;
+ padding: 0.5em 1em;
+ border-radius: 8px;
+border: none;
+ margin-bottom: 1em;
+ width: 80%;
+ text-align: center;
+ color: #222;         
+ background: #fff;      
+}
+
+#submitNameBtn,
+.submitNameBtn {
+ font-size: 1.1em;
+ padding: 0.5em 2em;
+border-radius: 10px;
+ border: none;
+ background: yellow;
+ color: black;
+  cursor: pointer;
+    margin-top: 0.5em;
+    transition: background 0.2s, color 0.2s, transform 0.1s;
+}
+
+#submitNameBtn:hover,
+.submitNameBtn:hover {
+    background: orange;
+ color: #222;
+  box-shadow: 0 0 10px yellow;
+ transform: scale(1.05);
+}
+
+.extra-life-dot {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    margin: 0 auto;
+    animation: extraLifeColor 1s linear infinite;
+}
+
+@keyframes extraLifeColor {
+ 0%   { background: red; }
+  25%  { background: orange; }
+  50%  { background: yellow; }
+ 75%  { background: green; }
+ 100% { background: red; }
+}
+
+.hidden {
+    visibility: hidden !important;
+}

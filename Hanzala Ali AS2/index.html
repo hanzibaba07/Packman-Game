@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AS2-Hanzla Ali</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="images/icon.png" type="image/x-icon">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <header>        <h1>Snack Man!</h1>
+    </header>
+
+    <div class="startDiv">
+      <div class="start">
+          <img src="images/icon.png" alt="logo">
+      <h1>Start</h1>
+        </div>
+    </div>
+
+    <div class="leaderboard">
+        <h1>LeaderBoard:</h1>
+        <ol>
+     </ol>
+    </div>
+
+    <main>
+    </main>
+    <div class="lives">
+        <h1>Lives:</h1>
+        <ul>
+        <li></li>
+            <li></li>
+         <li></li>
+        </ul>
+    </div>
+
+    <div class="score">
+        <h1>Score:</h1>
+        <p>0</p>
+    </div>
+    <div class="controls">
+        <button id="lbttn">&#9664;</button> <!-- LEFT -->
+        <button id="ubttn">&#9650;</button> <!-- UP -->
+        <button id="rbttn">&#9654;</button> <!-- RIGHT -->
+        <button id="dbttn">&#9660;</button> <!-- DOWN -->
+    </div>
+
+    <div id="gameOverMessage" class="game-over">
+        <h1>Game Over!</h1>
+        <p>You collected all the points!</p>
+        <button id="playAgainBtn">Restart</button>
+    </div>
+
+    <div id="namePopup" class="popup-bg" style="display:none;">
+        <div class="popup-content">
+            <h2>Enter Your Name</h2>
+            <input type="text" id="playerNameInput" maxlength="16" placeholder="Your name..." autofocus>
+            <button id="submitNameBtn">Submit</button>
+        </div>
+    </div>
+
+    <div id="levelCompleteMessage" class="game-over" style="display:none;">
+        <h1>Level Complete!</h1>
+        <p>Get ready for the next level!</p>
+        <button id="nextLevelBtn">Next Level</button>
+    </div>
+    <div id="levelMessage" class="popup-bg" style="display:none;">
+        <div class="popup-content">
+            <h2 id="levelTitle"></h2>
+            <p id="levelDesc" style="margin: 20px 0 0 0; font-size:1.2em;"></p>
+            <button id="continueLevelBtn" class="submitNameBtn">Continue</button>
+        </div>
+    </div>
+
+</body>
+
+</html>
